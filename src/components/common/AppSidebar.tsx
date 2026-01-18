@@ -2,7 +2,12 @@ import { CLASS_CATEGORY } from "@/constants/category.contstant";
 import { ChevronDown } from "lucide-react";
 import { Button } from "../ui";
 
-const AppSidebar = () => {
+interface Props {
+  category: string;
+  setCategory: (value: string) => void;
+}
+
+const AppSidebar = ({ category, setCategory }: Props) => {
   return (
     <aside className="min-w-60 w-60 flex flex-col gap-6">
       <div className="flex items-center gap-2">
@@ -15,7 +20,8 @@ const AppSidebar = () => {
             <Button
               key={menu.id}
               variant={"ghost"}
-              className="justify-start text-muted-foreground hover:text-white hover:pl-6 trasition-all duration-500"
+              className={`justify-start text-muted-foreground hover:text-white hover:pl-6 trasition-all duration-500 ${category === menu.category && "text-foreground !pl-6 bg-accent/50"}`}
+              onClick={() => setCategory(menu.category)}
             >
               {menu.icon}
               {menu.label}

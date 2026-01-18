@@ -75,7 +75,9 @@ const SignUp = () => {
       if (user && session) {
         const { data, error } = await supabase
           .from("user")
-          .insert([{ id: user.id, service_agreed: serviceAgreed, privacy_agreed: privacyAgreed, marketing_agreed: marketingAgreed }])
+          .insert([
+            { id: user.id, email: user.email, service_agreed: serviceAgreed, privacy_agreed: privacyAgreed, marketing_agreed: marketingAgreed },
+          ])
           .select();
         if (data) {
           // 성공 메시지 - Toast UI 발생 -> 로그인페이지 리다이렉트

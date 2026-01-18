@@ -72,7 +72,7 @@ const CreateTopic = () => {
     // RLS Policy 설정할 때, auth.uid() = author
     const { data, error } = await supabase
       .from("topic")
-      .update([{ status: TOPIC_STATUS.TEMP, title, content: JSON.stringify(content), category, thumbnail: thumbnailUrl, author: user.id }])
+      .update([{ status: TOPIC_STATUS.TEMP, title, content: JSON.stringify(content), category, thumbnail: thumbnailUrl, author: user?.id }])
       .eq("id", id)
       .select();
 
@@ -112,7 +112,7 @@ const CreateTopic = () => {
     // RLS Policy 설정할 때, auth.uid() = author
     const { data, error } = await supabase
       .from("topic")
-      .update([{ status: TOPIC_STATUS.PUBLISH, title, content: JSON.stringify(content), category, thumbnail: thumbnailUrl, author: user.id }])
+      .update([{ status: TOPIC_STATUS.PUBLISH, title, content: JSON.stringify(content), category, thumbnail: thumbnailUrl, author: user?.id }])
       .eq("id", id)
       .select();
 

@@ -30,8 +30,10 @@ const AppDraftsDialog = ({ children }: Props) => {
   const [drafts, setDrafts] = useState<Topic[]>([]);
 
   const fetchDrafts = async () => {
+    if (!user) return;
+
     try {
-      const { data: topics, error } = await supabase.from("topic").select("*").eq("author", user.id).eq("status", TOPIC_STATUS.TEMP);
+      const { data: topics, error } = await supabase.from("topic").select("*").eq("author", user?.id).eq("status", TOPIC_STATUS.TEMP);
       if (error) {
         toast.error(error.message);
         return;
@@ -46,7 +48,7 @@ const AppDraftsDialog = ({ children }: Props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (user.email) fetchDrafts();
+      if (user) fetchDrafts();
     }, 1000);
   }, []);
 

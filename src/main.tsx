@@ -6,9 +6,12 @@ import { Toaster } from "./components/ui/sonner.tsx";
 import "./index.css";
 import RootLayout from "./layout.tsx";
 import Home from "./pages";
+import AuthCallback from "./pages/auth/callback.tsx";
+import Protfolio from "./pages/portfolio/index.tsx";
 import SignIn from "./pages/sign-in";
 import SignUp from "./pages/sign-up";
 import CreateTopic from "./pages/topics/[topic_id]/create.tsx";
+import TopicDetail from "./pages/topics/[topic_id]/detail.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -19,11 +22,14 @@ createRoot(document.getElementById("root")!).render(
             <Route index element={<Home />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/topics/:id/create" element={<CreateTopic />} />
+            <Route path="/topics/:id/detail" element={<TopicDetail />} />
+            <Route path="/portfolio" element={<Protfolio />} />
           </Route>
         </Routes>
       </BrowserRouter>
       <Toaster richColors position="top-center" />
     </ThemeProvider>
-  </StrictMode>
+  </StrictMode>,
 );

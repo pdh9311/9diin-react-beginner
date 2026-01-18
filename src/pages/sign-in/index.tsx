@@ -30,6 +30,41 @@ const SignIn = () => {
 
   const setUser = useAuthStore((state) => state.setUser);
 
+  // useEffect(() => {
+  //   const checkSession = async () => {
+  //     const {
+  //       data: { session },
+  //     } = await supabase.auth.getSession();
+
+  //     if (session?.user) {
+  //       setUser({
+  //         id: session.user.id,
+  //         email: session.user.email as string,
+  //         role: session.user.role as string,
+  //       });
+  //       nav("/");
+  //     }
+  //   };
+  //   checkSession();
+  // }, []);
+
+  // 소셜로그인(구글 로그인)
+  const handleGoogleSignIn = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: { access_type: "offline", prompt: "consent" },
+        redirectTo: `${import.meta.env.VITE_SUPABASE_BASE_URL}/auth/callback`, // 로그인 후 돌아올 URL - 도메인
+      },
+    });
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+  };
+
+  // 일반로그인
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const {
@@ -68,7 +103,7 @@ const SignIn = () => {
           <p className="text-muted-foreground">로그인을 위한 정보를 입력해주세요.</p>
         </div>
         <div className="grid gap-3">
-          <Button type="button" variant={"secondary"}>
+          <Button type="button" variant={"secondary"} onClick={handleGoogleSignIn}>
             <img src="/assets/icons/social/google.svg" alt="@GOGGLE-LOGO" className="w-[18px] h-[18px] mr-1" />
             구글 로그인
           </Button>

@@ -7,11 +7,12 @@ import { useCreateBlockNote } from "@blocknote/react";
 import { useEffect } from "react";
 
 interface Props {
-  props: Block[];
-  setContent: (content: Block[]) => void;
+  props?: Block[];
+  setContent?: (content: Block[]) => void;
+  readonly?: boolean;
 }
 
-const AppEditor = ({ props, setContent }: Props) => {
+const AppEditor = ({ props, setContent, readonly }: Props) => {
   const locale = ko;
   const editor = useCreateBlockNote({
     dictionary: {
@@ -34,7 +35,17 @@ const AppEditor = ({ props, setContent }: Props) => {
     }
   }, [props, editor]);
 
-  return <BlockNoteView editor={editor} onChange={() => setContent(editor.document)} />;
+  return (
+    <BlockNoteView
+      editor={editor}
+      editable={!readonly}
+      onChange={() => {
+        if (!readonly) {
+          setContent?.(editor.document);
+        }
+      }}
+    />
+  );
 };
 
 export { AppEditor };
