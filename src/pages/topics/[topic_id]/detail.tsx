@@ -82,7 +82,7 @@ const TopicDetail = () => {
             <ArrowLeft />
           </Button>
           {/* 토픽을 작성한 사람의 user_id와 로그인한 사람의 user_id가 같은 경우에만 보이도록 한다. */}
-          {author === user.id && (
+          {user && author === user?.id && (
             <AlertDialog>
               <AlertDialogTrigger>
                 <Button variant="outline" size="icon" className="!bg-red-800/50">
