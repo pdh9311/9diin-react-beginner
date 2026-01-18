@@ -24,6 +24,11 @@ const AuthCallback = () => {
       try {
         let { data: existing, error: selectError } = await supabase.from("user").select("*").eq("id", user.id).single();
 
+        if (selectError) {
+          console.error("USER 테이블 조회중 에러발생하였습니다.");
+          return;
+        }
+
         if (!existing) {
           const { error: insertError } = await supabase
             .from("user")
