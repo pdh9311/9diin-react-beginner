@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import supabase from "@/lib/supabase";
+import { useAuthStore } from "@/stores";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, Asterisk, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -49,6 +50,25 @@ const SignUp = () => {
   const handleCheckService = () => setServiceAgreed(!serviceAgreed);
   const handleCheckPrivacy = () => setPrivacyAgreed(!privacyAgreed);
   const handleCheckMarketing = () => setMarketingAgreed(!marketingAgreed);
+
+  const setUser = useAuthStore((state) => state.setUser);
+  useEffect(() => {
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email as string,
+          role: session.user.role as string,
+        });
+        nav("/");
+      }
+    };
+    checkSession();
+  }, []);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!serviceAgreed || !privacyAgreed) {

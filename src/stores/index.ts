@@ -33,11 +33,7 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
-      user: {
-        id: "",
-        email: "",
-        role: "",
-      },
+      user: null,
       setUser: (newUser: User | null) => set({ user: newUser }),
 
       // 로그아웃 (상태 + Supabase 세션 모두 제거)

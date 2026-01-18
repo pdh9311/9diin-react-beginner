@@ -5,6 +5,7 @@ import { z } from "zod";
 import supabase from "@/lib/supabase";
 import { useAuthStore } from "@/stores";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -30,23 +31,23 @@ const SignIn = () => {
 
   const setUser = useAuthStore((state) => state.setUser);
 
-  // useEffect(() => {
-  //   const checkSession = async () => {
-  //     const {
-  //       data: { session },
-  //     } = await supabase.auth.getSession();
+  useEffect(() => {
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-  //     if (session?.user) {
-  //       setUser({
-  //         id: session.user.id,
-  //         email: session.user.email as string,
-  //         role: session.user.role as string,
-  //       });
-  //       nav("/");
-  //     }
-  //   };
-  //   checkSession();
-  // }, []);
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email as string,
+          role: session.user.role as string,
+        });
+        nav("/");
+      }
+    };
+    checkSession();
+  }, []);
 
   // 소셜로그인(구글 로그인)
   const handleGoogleSignIn = async () => {
