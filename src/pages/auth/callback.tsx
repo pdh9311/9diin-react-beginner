@@ -1,12 +1,11 @@
 import supabase from "@/lib/supabase";
-import { useAuthStore } from "@/stores";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 const AuthCallback = () => {
   const nav = useNavigate();
-  const setUser = useAuthStore((state) => state.setUser);
+  // const setUser = useAuthStore((state) => state.setUser);
 
   useEffect(() => {
     const handleAuthCallback = async () => {
